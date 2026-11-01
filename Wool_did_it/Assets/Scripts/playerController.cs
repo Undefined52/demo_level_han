@@ -42,9 +42,7 @@ public class playerController : MonoBehaviour
     {
         _controller.SimpleMove(_character.rotation * _moveDirection);
 
-        float delta = _lookVector.x - characterAngle;
-        characterAngle += delta * Time.deltaTime * turnSpeed;
-        _character.rotation = Quaternion.Euler(0, characterAngle, 0);
+        UpdateRotation();
     }
 
     
@@ -55,21 +53,22 @@ public class playerController : MonoBehaviour
         _moveDirection.z = move.y * speed;
     }
 
-    
-    // private void OnLook(InputValue value)
-    // {
-    //     _looking = value.Get<float>() != 0;
-    //     Cursor.visible = !_looking;
-    // }
-
-
     private void OnMouseMove(InputValue value)
     {
-        // if (_looking) {
-            _lookVector += value.Get<Vector2>() * cameraSpeed;
-            if (_lookVector.y < minAngle) _lookVector.y = minAngle;
-            else if (_lookVector.y > maxAngle) _lookVector.y = maxAngle;
-            _camPivot.rotation = Quaternion.Euler(-_lookVector.y, _lookVector.x, 0f);
-        // }
+        _lookVector += value.Get<Vector2>() * cameraSpeed;
+        if (_lookVector.y < minAngle) _lookVector.y = minAngle;
+        else if (_lookVector.y > maxAngle) _lookVector.y = maxAngle;
+        _camPivot.rotation = Quaternion.Euler(-_lookVector.y, _lookVector.x, 0f);
+    }
+
+
+    private void UpdateRotation()
+    {
+        float delta = _lookVector.x - characterAngle;
+        delta %= 360f;
+        characterAngle = _lookVector.x - delta;
+        
+        characterAngle += delta * Time.deltaTime * turnSpeed;
+        _character.rotation = Quaternion.Euler(0, characterAngle, 0);
     }
 }
