@@ -16,6 +16,7 @@ public class playerController : MonoBehaviour
     private CharacterController _controller;
     private Transform _camPivot;
     private Transform _character;
+    private Animator _animator;
     
     // input
     private Vector3 _moveDirection = Vector3.zero;
@@ -23,24 +24,27 @@ public class playerController : MonoBehaviour
 
     private Vector2 _lookVector;
     private float characterAngle;
+    private Vector2 velocity;
     
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
         _camPivot = transform.Find("CameraPivot");
         _character = transform.Find("Character");
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-    
-    
-    private  void FixedUpdate()
-    {
+        _animator = _character.GetComponent<Animator>();
         
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
     {
         _controller.SimpleMove(_character.rotation * _moveDirection);
+        
+        velocity.y += (_moveDirection.z - velocity.y) * Time.deltaTime * 10;
+        velocity.x += (_moveDirection.x - velocity.x) * Time.deltaTime * 10;
+        
+        _animator.SetFloat("speed", velocity.y);
+        _animator.SetFloat("Strafe", velocity.x);
 
         UpdateRotation();
     }
@@ -49,8 +53,11 @@ public class playerController : MonoBehaviour
     private void OnMove(InputValue value)
     {
         Vector2 move = value.Get<Vector2>();
+        
         _moveDirection.x = move.x * speed;
         _moveDirection.z = move.y * speed;
+        if (_moveDirection.z < 0) _moveDirection.z *= 0.5f;
+        _moveDirection.x *= 0.5f;
     }
 
     private void OnMouseMove(InputValue value)
