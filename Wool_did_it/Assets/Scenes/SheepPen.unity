@@ -615,6 +615,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 10011c4872845e16ba3c0f85bef113ac, type: 2}
+    - target: {fileID: 3932060997229821775, guid: 2b386d26b093cfa7daff078a58055542, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3932060997229821775, guid: 2b386d26b093cfa7daff078a58055542, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4280574526796303007, guid: 2b386d26b093cfa7daff078a58055542, type: 3}
       propertyPath: m_Name
       value: PlayerSheep

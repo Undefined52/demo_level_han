@@ -48,6 +48,12 @@ public class playerController : MonoBehaviour
 
         UpdateRotation();
     }
+    
+    private void OnPickup(InputValue value)
+    {
+        
+        _animator.SetTrigger("pickup");
+    }
 
     
     private void OnMove(InputValue value)
@@ -58,6 +64,7 @@ public class playerController : MonoBehaviour
         _moveDirection.z = move.y * speed;
         if (_moveDirection.z < 0) _moveDirection.z *= 0.5f;
         _moveDirection.x *= 0.5f;
+        _animator.SetBool("moving", move != Vector2.zero);
     }
 
     private void OnMouseMove(InputValue value)
