@@ -37,6 +37,7 @@ public class SheepAI : MonoBehaviour {
         }
         
         StartCoroutine(ChooseNewPOI());
+        StartCoroutine(WanderFromPath());
     }
 
     // Update is called once per frame
@@ -47,7 +48,18 @@ public class SheepAI : MonoBehaviour {
 
     IEnumerator ChooseNewPOI() {
         int pointIndex = UnityEngine.Random.Range(0, interestPoints.Count);
-        print("moving to " + interestPoints[pointIndex].position);
+        Vector2 randPoint = ((maxWanderDist/2) * Random.insideUnitCircle);
+        Vector3 interestPoint = interestPoints[pointIndex].position;
+        interestPoint.x += randPoint.x;
+        interestPoint.z += randPoint.y;
+        if(Physics.Raycast(interestPoint + (5 * Vector3.up), Vector3.down, out RaycastHit hit, 10)) {
+            pointOffset = hit.point - interestPoints[pointIndex].position;
+        } else {
+            pointOffset = Vector3.zero;
+            pointOffset.x += randPoint.x;
+            pointOffset.z += randPoint.y;
+        }
+        print("moving to " + (interestPoints[pointIndex].position + pointOffset));
         StartCoroutine(NavigateTowardsPOI(interestPoints[pointIndex].position + pointOffset));
         yield break;
     }
@@ -68,5 +80,16 @@ public class SheepAI : MonoBehaviour {
         yield return new WaitForSeconds(Random.Range(minWaitTime, maxWaitTime));
         agent.isStopped = false;
         StartCoroutine(ChooseNewPOI());
+    }
+
+    IEnumerator WanderFromPath() {
+        while(true) {
+            yield return new WaitForSeconds(Random.Range(minWanderCooldown, maxWanderCooldown));
+            Vector3 prevDest = agent.destination;
+            Vector2 wanderOffset = maxWanderDist * Random.insideUnitCircle;
+            agent.destination = agent.transform.position + new Vector3(wanderOffset.x, 0, wanderOffset.y);
+            yield return new WaitForSeconds(Random.Range(minWaitTime, maxWaitTime));
+            agent.destination = prevDest;
+        }
     }
 }
