@@ -705,3 +705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 978e780df84e89345b4c5c4293717f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  _onPickup:
+    m_PersistentCalls:
+      m_Calls: []

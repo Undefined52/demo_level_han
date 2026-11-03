@@ -24,6 +24,8 @@ public class SheepAI : MonoBehaviour {
     private Transform currentTarget;
     private Vector3 pointOffset;
     private NavMeshAgent agent;
+    private Transform character;
+    private Animator animator;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
@@ -36,14 +38,20 @@ public class SheepAI : MonoBehaviour {
             throw new NoNullAllowedException("Missing value for points of interest");
         }
         
+        character = transform.Find("Character");
+        animator = character.GetComponent<Animator>();
+        
         StartCoroutine(ChooseNewPOI());
         StartCoroutine(WanderFromPath());
+        StartCoroutine(CheckForPickup());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        animator.SetBool("moving",  agent.velocity != Vector3.zero);
+        animator.SetFloat("speed", Vector3.Dot(transform.forward, agent.velocity));
+        animator.SetFloat("Strafe", Vector3.Dot(transform.right, agent.velocity));
     }
 
     IEnumerator ChooseNewPOI() {
@@ -59,7 +67,7 @@ public class SheepAI : MonoBehaviour {
             pointOffset.x += randPoint.x;
             pointOffset.z += randPoint.y;
         }
-        print("moving to " + (interestPoints[pointIndex].position + pointOffset));
+        // print("moving to " + (interestPoints[pointIndex].position + pointOffset));
         StartCoroutine(NavigateTowardsPOI(interestPoints[pointIndex].position + pointOffset));
         yield break;
     }
@@ -69,7 +77,7 @@ public class SheepAI : MonoBehaviour {
         float wanderWatcher = maxTimeoutTime / 4;
         agent.destination = POI;
         while(agent.remainingDistance >= destArrivedDist && watcherTimer > 0) {
-            print("remaining dist: " + agent.remainingDistance + " time: " + watcherTimer);
+            // print("remaining dist: " + agent.remainingDistance + " time: " + watcherTimer);
             
             watcherTimer -= navigationCheckInterval;
             yield return new WaitForSeconds(navigationCheckInterval);
@@ -90,6 +98,16 @@ public class SheepAI : MonoBehaviour {
             agent.destination = agent.transform.position + new Vector3(wanderOffset.x, 0, wanderOffset.y);
             yield return new WaitForSeconds(Random.Range(minWaitTime, maxWaitTime));
             agent.destination = prevDest;
+        }
+    }
+
+    IEnumerator CheckForPickup() {
+        while(true) {
+            if(agent.remainingDistance <= destArrivedDist) {
+                animator.SetTrigger("pickup");
+            }
+
+            yield return new WaitForSeconds(3f);
         }
     }
 }
