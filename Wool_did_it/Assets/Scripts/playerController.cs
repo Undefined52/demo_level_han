@@ -1,6 +1,9 @@
+using System;
+using Mono.Cecil;
 using NUnit.Framework.Internal.Commands;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class playerController : MonoBehaviour
 {
@@ -12,6 +15,17 @@ public class playerController : MonoBehaviour
     [SerializeField] private float cameraSpeed;
     [SerializeField] private float minAngle;
     [SerializeField] private float maxAngle;
+
+    [Header("UI")] 
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject clueBook;
+    
+    [Header("Clues")]
+    [SerializeField] private float clueDistance;
+    [SerializeField] private Transform clueCheckOrigin;
+
+    private Camera _boardCam;
+    private bool _inBoard;
     
     private CharacterController _controller;
     private Transform _camPivot;
@@ -21,6 +35,7 @@ public class playerController : MonoBehaviour
     // input
     private Vector3 _moveDirection = Vector3.zero;
     private bool _looking;
+    private bool _pauseMenu;
 
     private Vector2 _lookVector;
     private float characterAngle;
@@ -48,11 +63,80 @@ public class playerController : MonoBehaviour
 
         UpdateRotation();
     }
-    
-    private void OnPickup(InputValue value)
-    {
+
+    public void OnPickup(InputValue value) {
+        if(_inBoard) {
+            _inBoard = false;
+            _boardCam.gameObject.SetActive(false);
+            GetComponentInChildren<Camera>(true).gameObject.SetActive(true);
+            UpdateTimeScale();
+        } else {
+            _animator.SetTrigger("pickup");
+        }
+    }
+
+    public void OnPause() {
+        _pauseMenu = !_pauseMenu;
+        pauseMenu.SetActive(_pauseMenu);
+        UpdateTimeScale();
+    }
+
+    private void UpdateTimeScale() {
+        Time.timeScale = _inBoard | _pauseMenu ? 0 : 1;
+        Cursor.lockState = _inBoard | _pauseMenu ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    public void Quit() {
+        Application.Quit();
+    }
+
+    public void CheckForClues() {
+        Collider[] clueChecks = Physics.OverlapSphere(clueCheckOrigin.position, clueDistance);
+        foreach(Collider clue in clueChecks) {
+            if(clue.gameObject.name == "GuessBoard") {
+                print("Guessboard");
+                _boardCam = clue.gameObject.GetComponentInChildren<Camera>(true);
+                _boardCam.gameObject.SetActive(true);
+                GetComponentInChildren<Camera>(true).gameObject.SetActive(false);
+                _inBoard = true;
+                UpdateTimeScale();
+            }
+            if(!clue.CompareTag("Clue")) {
+                continue;
+            }
+
+            AddClue(clue.gameObject);
+        }
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.rebeccaPurple;
+        Gizmos.DrawWireSphere(clueCheckOrigin.position, clueDistance);
         
-        _animator.SetTrigger("pickup");
+    }
+
+    private void AddClue(GameObject clue) {
+        RawImage[] images = clueBook.GetComponentsInChildren<RawImage>(true);
+        foreach(RawImage image in images) {
+            string bookClueName = image.gameObject.transform.parent.parent.gameObject.name;
+            if(image.gameObject.transform.parent.gameObject.activeSelf) {
+                continue;
+            }
+            if(bookClueName == "Weapon" && clue.name == "shovel") {
+                clueBook.SetActive(true);
+                image.gameObject.transform.parent.gameObject.SetActive(true);
+            } else if(bookClueName == "Wool" && clue.name == "Wool") {
+                clueBook.SetActive(true);
+                image.gameObject.transform.parent.gameObject.SetActive(true);
+            } else if(bookClueName == "Location" && clue.name == "bodytape") {
+                clueBook.SetActive(true);
+                image.gameObject.transform.parent.gameObject.SetActive(true);
+            }
+        }
+    }
+
+    private void OnClues() {
+        clueBook.SetActive(!clueBook.activeSelf);
     }
 
     
