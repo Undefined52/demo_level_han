@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 101c2639ccf6c1cc89d321df8eb38414
+guid: c2724029bde61ec4ca58efeadd765d05
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: shovel
-    second: {fileID: 2100000, guid: 2efd48117b9c29da1aad05c9c7a582b8, type: 2}
+    second: {fileID: 2100000, guid: 2167b6116c48d91488a524d4207553ac, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -47,10 +47,10 @@ ModelImporter:
     preBakeConvexCollisionMesh: 0
     preBakeTriangleCollisionMesh: 0
     importPhysicalCameras: 1
-    importVisibility: 0
-    importBlendShapes: 0
-    importCameras: 0
-    importLights: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
