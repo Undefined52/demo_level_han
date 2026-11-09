@@ -264,11 +264,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0c2f8fa8dce0642b9536d4f99eff80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  speed: 3
+  speed: 3.5
   turnSpeed: 20
   cameraSpeed: 0.1
   minAngle: 10
   maxAngle: 100
+  pauseMenu: {fileID: 0}
+  clueBook: {fileID: 0}
+  clueDistance: 1.5
+  clueCheckOrigin: {fileID: 0}
 --- !u!81 &7601438101122070794
 AudioListener:
   m_ObjectHideFlags: 0

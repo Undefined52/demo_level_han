@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5618520695669701468}
   - component: {fileID: 5261098624649656311}
   m_Layer: 5
-  m_Name: Cover (1)
+  m_Name: PageRightBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1148332507573701991}
   - component: {fileID: 1287701321750118092}
   m_Layer: 5
-  m_Name: Cover (2)
+  m_Name: PageLeftMiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,13 +178,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 584971944256289130}
-  - {fileID: 3924307149925369819}
-  - {fileID: 8271402472506485278}
-  - {fileID: 2386256041026175650}
-  - {fileID: 7916195073584442131}
   - {fileID: 1961601758100598211}
+  - {fileID: 584971944256289130}
+  - {fileID: 8271402472506485278}
   - {fileID: 5394389809793263804}
+  - {fileID: 2386256041026175650}
+  - {fileID: 3924307149925369819}
+  - {fileID: 7916195073584442131}
+  - {fileID: 1950813028790630355}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -204,7 +205,7 @@ GameObject:
   - component: {fileID: 2975389291567045602}
   - component: {fileID: 3721054885979673654}
   m_Layer: 5
-  m_Name: Cover (1)
+  m_Name: PageRightFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,7 +280,7 @@ GameObject:
   - component: {fileID: 29756748653078684}
   - component: {fileID: 7515188086744330354}
   m_Layer: 5
-  m_Name: Cover (4)
+  m_Name: PageLeftBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,7 +355,7 @@ GameObject:
   - component: {fileID: 7971560566754417226}
   - component: {fileID: 6334412216915264935}
   m_Layer: 5
-  m_Name: Cover (3)
+  m_Name: PageRightMiddle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,6 +418,41 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 0.1
+--- !u!1 &5547628214506009069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1950813028790630355}
+  m_Layer: 5
+  m_Name: Tabs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1950813028790630355
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5547628214506009069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6071557898031642914}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7005353601422747465
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,7 +540,7 @@ GameObject:
   - component: {fileID: 5352695486070174021}
   - component: {fileID: 7005493631653278916}
   m_Layer: 5
-  m_Name: Cover (2)
+  m_Name: PageLeftFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

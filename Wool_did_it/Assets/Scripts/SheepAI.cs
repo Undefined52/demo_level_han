@@ -18,7 +18,7 @@ public class SheepAI : MonoBehaviour {
     public float maxWanderDist;
 
 
-    private const float destArrivedDist = 3f;
+    public float destArrivedDist = 3f;
     private const float maxTimeoutTime = 30f;
     private const float navigationCheckInterval = 0.1f;
     private Transform currentTarget;
@@ -74,7 +74,6 @@ public class SheepAI : MonoBehaviour {
     
     IEnumerator NavigateTowardsPOI(Vector3 POI) {
         float watcherTimer = maxTimeoutTime;
-        float wanderWatcher = maxTimeoutTime / 4;
         agent.destination = POI;
         while(agent.remainingDistance >= destArrivedDist && watcherTimer > 0) {
             // print("remaining dist: " + agent.remainingDistance + " time: " + watcherTimer);
